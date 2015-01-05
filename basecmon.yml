@@ -1,0 +1,9 @@
+---
+# This playbook used to dynamically create RAX resources 
+
+- hosts: testserv
+  user: root
+  remote_user: root
+  sudo: yes
+  roles:
+    - rax-cmon-install

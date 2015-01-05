@@ -1,0 +1,6 @@
+# Here are variables related to the play
+
+raxcmonrepo: rackspace-cloud-monitoring-centos6.repo
+raxcmonkey: signing-key-centos6.asc
+raxkey: 1234567890
+raxuser: testuser01

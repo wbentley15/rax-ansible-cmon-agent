@@ -1,0 +1,24 @@
+---
+
+- name: Copy RAX CMON signing key
+  copy: src={{ raxcmonkey }} dest=/usr/share/signing-key.asc
+
+- name: Import RAX CMON signing key
+  command: chdir=/bin rpm --import /usr/share/signing-key.asc
+
+- name: Copy RAX CMON agent repo
+  copy: src={{ raxcmonrepo }} dest=/etc/yum.repos.d/rackspace-cloud-monitoring.repo mode=0644
+
+- name: Install RAX CMON Agent
+  yum: name={{item}} state=present
+  with_items:
+   - rackspace-monitoring-agent
+
+- name: Run RAX CMON setup
+  command: rackspace-monitoring-agent --setup --username {{ raxuser }} --apikey {{ raxkey }}
+
+- name: Start RAX CMON service
+  shell: service rackspace-monitoring-agent start
+  
+- name: Enable RAX CMON to be started at boot
+  service: name=rackspace-monitoring-agent enabled=yes state=started
